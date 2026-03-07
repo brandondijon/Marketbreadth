@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
@@ -300,13 +301,16 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:#111827;font-fa
 .tvt{padding:2px 7px;border-radius:3px;font-size:9px;font-weight:700;cursor:pointer;border:1px solid #e2e6ee;background:none;color:#9ca3af;font-family:'IBM Plex Mono',monospace}
 .tvt.on{background:#2563eb;color:#fff;border-color:#2563eb}
 </style>
+
 </head>
 <body>
 
 <!-- TICKER TAPE -->
+
 <div id="tape"><div class="tape-scroll" id="tape-inner"></div></div>
 
 <!-- TOP BAR -->
+
 <div id="topbar">
   <span class="tb-logo">⚡ Market Monitor</span>
   <button class="tb-tab active" onclick="setMainTab(this,'monitor')">Market Monitor</button>
@@ -321,9 +325,11 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:#111827;font-fa
 </div>
 
 <!-- MAIN 3-COL -->
+
 <div id="main">
 
   <!-- ── COL 1: Sector ETFs + Breadth ── -->
+
   <div class="panel">
     <div class="ph">
       <span class="ph-title">Sector ETFs</span>
@@ -340,71 +346,75 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:#111827;font-fa
     </div>
     <div class="scroll-body" id="sector-list"></div>
 
-    <!-- Market Breadth -->
-    <div id="breadth">
-      <div class="b-title" style="display:flex;align-items:center;justify-content:space-between;">
-        <span>Market Breadth</span>
-        <a href="breadth.html" target="_blank" style="font-size:9px;color:var(--blue2);text-decoration:none;letter-spacing:0.06em;opacity:0.8">FULL VIEW ↗</a>
-      </div>
+```
+<!-- Market Breadth -->
+<div id="breadth">
+  <div class="b-title" style="display:flex;align-items:center;justify-content:space-between;">
+    <span>Market Breadth</span>
+    <a href="#" onclick="setMainTab(document.querySelectorAll('.tb-tab')[6],'breadth');return false;" style="font-size:9px;color:var(--blue2);text-decoration:none;letter-spacing:0.06em;opacity:0.8">FULL VIEW ↗</a>
+  </div>
 
-      <!-- PARTICIPATION -->
-      <div style="font-size:9px;color:var(--blue2);text-transform:uppercase;letter-spacing:0.1em;margin:8px 0 5px;font-weight:700;">① Participation — % Above DMA</div>
-      <div class="b-row"><span class="b-label">20-Day DMA</span><span class="b-val" style="color:var(--amber)">44%</span></div>
-      <div class="b-track"><div class="b-fill" style="width:44%;background:#d1d5db"></div></div>
-      <div class="b-sub"><span>Narrow — semi rout hit short-term</span></div>
+  <!-- PARTICIPATION -->
+  <div style="font-size:9px;color:var(--blue2);text-transform:uppercase;letter-spacing:0.1em;margin:8px 0 5px;font-weight:700;">① Participation — % Above DMA</div>
+  <div class="b-row"><span class="b-label">20-Day DMA</span><span class="b-val" style="color:var(--amber)">44%</span></div>
+  <div class="b-track"><div class="b-fill" style="width:44%;background:#d1d5db"></div></div>
+  <div class="b-sub"><span>Narrow — semi rout hit short-term</span></div>
 
-      <div class="b-row"><span class="b-label">50-Day DMA</span><span class="b-val" style="color:var(--amber)">51%</span></div>
-      <div class="b-track"><div class="b-fill" style="width:51%;background:#d1d5db"></div></div>
+  <div class="b-row"><span class="b-label">50-Day DMA</span><span class="b-val" style="color:var(--amber)">51%</span></div>
+  <div class="b-track"><div class="b-fill" style="width:51%;background:#d1d5db"></div></div>
 
-      <div class="b-row"><span class="b-label">200-Day DMA</span><span class="b-val" style="color:var(--green)">68%</span></div>
-      <div class="b-track"><div class="b-fill" style="width:68%;background:#d1d5db"></div></div>
-      <div class="b-sub"><span>Foundation intact · Bull trend</span></div>
+  <div class="b-row"><span class="b-label">200-Day DMA</span><span class="b-val" style="color:var(--green)">68%</span></div>
+  <div class="b-track"><div class="b-fill" style="width:68%;background:#d1d5db"></div></div>
+  <div class="b-sub"><span>Foundation intact · Bull trend</span></div>
 
-      <!-- McCLELLAN -->
-      <div style="font-size:9px;color:#d500f9;text-transform:uppercase;letter-spacing:0.1em;margin:10px 0 5px;font-weight:700;">② Momentum — McClellan Oscillator</div>
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
-        <div style="display:flex;align-items:baseline;gap:6px;">
-          <span style="font-size:26px;font-weight:700;color:var(--red);letter-spacing:-1px;font-family:var(--mono)">−62</span>
-          <span style="font-size:9px;color:#9ca3af">NYSE MCO</span>
-        </div>
-        <div style="font-size:9px;padding:2px 7px;background:#f3f4f6;color:#374151;border-radius:8px;font-weight:700;letter-spacing:0.08em;">OVERSOLD</div>
-      </div>
-      <div class="b-track" style="height:8px;">
-        <!-- gauge: 0%=−150, 50%=0, 100%=+150 · −62 ≈ 29% -->
-        <div class="b-fill" style="width:29%;background:#d1d5db;height:8px;border-radius:4px;"></div>
-      </div>
-      <div class="b-sub"><span style="color:var(--red)">Below −50 · Bounce potential</span><span>Sum: −2,140</span></div>
-
-      <!-- NH / NL -->
-      <div style="font-size:9px;color:var(--green);text-transform:uppercase;letter-spacing:0.1em;margin:10px 0 5px;font-weight:700;">③ Strength — Net New Highs / Lows</div>
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
-        <span style="font-size:22px;font-weight:700;color:var(--green);letter-spacing:-0.5px">163<span style="font-size:9px;font-weight:400;color:#9ca3af;margin-left:3px">NH</span></span>
-        <span style="font-size:10px;color:#9ca3af">Net <strong style="color:var(--green)">+59</strong></span>
-        <span style="font-size:22px;font-weight:700;color:var(--red);letter-spacing:-0.5px">104<span style="font-size:9px;font-weight:400;color:#9ca3af;margin-left:3px">NL</span></span>
-      </div>
-      <div class="b-track">
-        <div style="position:absolute;top:0;left:0;height:100%;width:44%;background:#e5e7eb;border-radius:4px 0 0 4px;"></div>
-        <div style="position:absolute;top:0;right:0;height:100%;width:56%;background:#d1d5db;border-radius:0 4px 4px 0;"></div>
-      </div>
-      <div class="b-sub" style="position:relative;"><span style="color:var(--green)">61% NH ratio · Leaders still leading</span></div>
-
-      <!-- VOLUME -->
-      <div style="font-size:9px;color:var(--amber);text-transform:uppercase;letter-spacing:0.1em;margin:10px 0 5px;font-weight:700;">④ Volume — Conviction (NYSE)</div>
-      <div style="display:flex;justify-content:space-between;margin-bottom:5px;">
-        <div><span style="font-size:16px;font-weight:700;color:var(--green)">3.12B</span> <span style="font-size:9px;color:#9ca3af">↑ Up</span></div>
-        <div><span style="font-size:9px;color:#9ca3af">38% / </span><span style="font-size:9px;color:#9ca3af">62%</span></div>
-        <div><span style="font-size:16px;font-weight:700;color:var(--red)">5.08B</span> <span style="font-size:9px;color:#9ca3af">↓ Down</span></div>
-      </div>
-      <div style="height:12px;background:#f0f4fb;border-radius:5px;overflow:hidden;display:flex;">
-        <div style="flex:3.12;background:#e5e7eb;border-radius:5px 0 0 5px;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#374151;">38%</div>
-        <div style="flex:5.08;background:#d1d5db;border-radius:0 5px 5px 0;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#374151;">62%</div>
-      </div>
-      <div class="b-sub"><span style="color:var(--red);font-weight:600">⚠ Distribution Day #3</span><span>NVDA 211M shares</span></div>
-
+  <!-- McCLELLAN -->
+  <div style="font-size:9px;color:#d500f9;text-transform:uppercase;letter-spacing:0.1em;margin:10px 0 5px;font-weight:700;">② Momentum — McClellan Oscillator</div>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+    <div style="display:flex;align-items:baseline;gap:6px;">
+      <span style="font-size:26px;font-weight:700;color:var(--red);letter-spacing:-1px;font-family:var(--mono)">−62</span>
+      <span style="font-size:9px;color:#9ca3af">NYSE MCO</span>
     </div>
+    <div style="font-size:9px;padding:2px 7px;background:#f3f4f6;color:#374151;border-radius:8px;font-weight:700;letter-spacing:0.08em;">OVERSOLD</div>
+  </div>
+  <div class="b-track" style="height:8px;">
+    <!-- gauge: 0%=−150, 50%=0, 100%=+150 · −62 ≈ 29% -->
+    <div class="b-fill" style="width:29%;background:#d1d5db;height:8px;border-radius:4px;"></div>
+  </div>
+  <div class="b-sub"><span style="color:var(--red)">Below −50 · Bounce potential</span><span>Sum: −2,140</span></div>
+
+  <!-- NH / NL -->
+  <div style="font-size:9px;color:var(--green);text-transform:uppercase;letter-spacing:0.1em;margin:10px 0 5px;font-weight:700;">③ Strength — Net New Highs / Lows</div>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+    <span style="font-size:22px;font-weight:700;color:var(--green);letter-spacing:-0.5px">163<span style="font-size:9px;font-weight:400;color:#9ca3af;margin-left:3px">NH</span></span>
+    <span style="font-size:10px;color:#9ca3af">Net <strong style="color:var(--green)">+59</strong></span>
+    <span style="font-size:22px;font-weight:700;color:var(--red);letter-spacing:-0.5px">104<span style="font-size:9px;font-weight:400;color:#9ca3af;margin-left:3px">NL</span></span>
+  </div>
+  <div class="b-track">
+    <div style="position:absolute;top:0;left:0;height:100%;width:44%;background:#e5e7eb;border-radius:4px 0 0 4px;"></div>
+    <div style="position:absolute;top:0;right:0;height:100%;width:56%;background:#d1d5db;border-radius:0 4px 4px 0;"></div>
+  </div>
+  <div class="b-sub" style="position:relative;"><span style="color:var(--green)">61% NH ratio · Leaders still leading</span></div>
+
+  <!-- VOLUME -->
+  <div style="font-size:9px;color:var(--amber);text-transform:uppercase;letter-spacing:0.1em;margin:10px 0 5px;font-weight:700;">④ Volume — Conviction (NYSE)</div>
+  <div style="display:flex;justify-content:space-between;margin-bottom:5px;">
+    <div><span style="font-size:16px;font-weight:700;color:var(--green)">3.12B</span> <span style="font-size:9px;color:#9ca3af">↑ Up</span></div>
+    <div><span style="font-size:9px;color:#9ca3af">38% / </span><span style="font-size:9px;color:#9ca3af">62%</span></div>
+    <div><span style="font-size:16px;font-weight:700;color:var(--red)">5.08B</span> <span style="font-size:9px;color:#9ca3af">↓ Down</span></div>
+  </div>
+  <div style="height:12px;background:#f0f4fb;border-radius:5px;overflow:hidden;display:flex;">
+    <div style="flex:3.12;background:#e5e7eb;border-radius:5px 0 0 5px;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#374151;">38%</div>
+    <div style="flex:5.08;background:#d1d5db;border-radius:0 5px 5px 0;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#374151;">62%</div>
+  </div>
+  <div class="b-sub"><span style="color:var(--red);font-weight:600">⚠ Distribution Day #3</span><span>NVDA 211M shares</span></div>
+
+</div>
+```
+
   </div>
 
   <!-- ── COL 2: Theme Heatmap + Market Brief ── -->
+
   <div id="center">
     <div id="theme-panel">
       <div class="ph">
@@ -431,70 +441,73 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:#111827;font-fa
         <div class="brief-text">
           <p><strong style="color:var(--red)">NVDA sell-the-news rout.</strong> Nvidia crushed Q4 — $68.13B revenue (+73% YoY), EPS $1.76 beat, guided $78B Q1 — yet shares closed -4.4% at $187. Semis cascade: AMAT -6.2%, WDC -6.8%, Broadcom surges +5.67% on its own AI data center outlook. TTD crushed -16% on weak Q1 EBITDA guide. S&P -0.88% to 6,884. Nasdaq -1.53% to 22,797. Russell 2000 -0.14%.</p>
           <p><strong style="color:var(--green)">Dow outperforms on defensive rotation.</strong> Dow -0.21% but IBM +3.80%, UNH +2.91%, AXP +2.59% lead blue chips higher. AMD +3.81%, TSM +3.44%, GOOGL +2.04%, TSLA +2.26% bucked the semi rout. VIX spiked to 19.42 (+8.3%). 10Y Treasury fell to 4.02% — lowest since Nov. Iran nuclear talks in Geneva keeping oil pressure elevated.</p>
-          <p><strong style="color:var(--amber)">Macro:</strong> Gold $5,201/oz (-0.47%), BTC $66,671 (-2.06%), Copper miners +2.89%. Jobless claims data digested; Fed's Miran urges 4 rate cuts in 2026. New Fed Chair Kevin Warsh scrutinized for policy leanings. Salesforce +3% on beat; CRM outlook lukewarm.</p>
+          <p><strong style="color:var(--amber)">Macro:</strong> Gold $2,928/oz (-0.47%), BTC $66,671 (-2.06%), Copper miners +2.89%. Jobless claims data digested; Fed's Miran urges 4 rate cuts in 2026. New Fed Chair Kevin Warsh scrutinized for policy leanings. Salesforce +3% on beat; CRM outlook lukewarm.</p>
         </div>
       </div>
-      <div class="brief-footer">📅 Feb 26, 2026 CLOSE · S&P 6,884 -0.88% · Nasdaq 22,797 -1.53% · Dow 49,378 -0.21% · Russell -0.14% · VIX 19.42 +8.3% · 10Y 4.02% · Gold $5,201 · BTC $66,671 · NVDA -4.4% · TTD -16% · AVGO +5.67%</div>
+      <div class="brief-footer">📅 Feb 26, 2026 CLOSE · S&P 6,884 -0.88% · Nasdaq 22,797 -1.53% · Dow 49,378 -0.21% · Russell -0.14% · VIX 19.42 +8.3% · 10Y 4.02% · Gold $2,928 · BTC $66,671 · NVDA -4.4% · TTD -16% · AVGO +5.67%</div>
     </div>
   </div>
 
   <!-- ── COL 3: Indexes + Mega Caps + Leaders ── -->
+
   <div id="right">
 
-    <!-- INDEXES -->
-    <div class="wl-section" style="flex:0 0 auto;max-height:38%">
-      <div class="ph">
-        <span class="ph-title">Indexes</span>
-        <div class="ph-dot"></div>
-      </div>
-      <div class="wl-cols" style="grid-template-columns:14px 52px 18px 1fr 50px">
-        <div class="wl-col"></div>
-        <div class="wl-col">Symbol</div>
-        <div class="wl-col">Wt.</div>
-        <div class="wl-col">Name</div>
-        <div class="wl-col right">% Chg</div>
-      </div>
-      <div class="wl-body" id="indexes-list"></div>
-      <div style="font-size:8px;color:#9ca3b0;padding:3px 6px;border-top:1px solid var(--border)">0 of 16 results (0 selected)</div>
-    </div>
+```
+<!-- INDEXES -->
+<div class="wl-section" style="flex:0 0 auto;max-height:38%">
+  <div class="ph">
+    <span class="ph-title">Indexes</span>
+    <div class="ph-dot"></div>
+  </div>
+  <div class="wl-cols" style="grid-template-columns:14px 52px 18px 1fr 50px">
+    <div class="wl-col"></div>
+    <div class="wl-col">Symbol</div>
+    <div class="wl-col">Wt.</div>
+    <div class="wl-col">Name</div>
+    <div class="wl-col right">% Chg</div>
+  </div>
+  <div class="wl-body" id="indexes-list"></div>
+  <div style="font-size:8px;color:#9ca3b0;padding:3px 6px;border-top:1px solid var(--border)">0 of 16 results (0 selected)</div>
+</div>
 
-    <!-- MEGA CAPS -->
-    <div class="wl-section flex1">
-      <div class="ph">
-        <span class="ph-title">Mega Caps</span>
-        <div class="ph-dot"></div>
-      </div>
-      <div class="wl-cols" style="grid-template-columns:14px 52px 56px 40px 62px 32px 30px">
-        <div class="wl-col"></div>
-        <div class="wl-col">Symbol</div>
-        <div class="wl-col right">% Chg</div>
-        <div class="wl-col right">Last</div>
-        <div class="wl-col right">Avg$Vol</div>
-        <div class="wl-col right">ADR</div>
-        <div class="wl-col right">RV</div>
-      </div>
-      <div class="wl-body" id="mega-list"></div>
-      <div style="font-size:8px;color:#9ca3b0;padding:3px 6px;border-top:1px solid var(--border)" id="mega-count">0 of 12 results (0 selected)</div>
-    </div>
+<!-- MEGA CAPS -->
+<div class="wl-section flex1">
+  <div class="ph">
+    <span class="ph-title">Mega Caps</span>
+    <div class="ph-dot"></div>
+  </div>
+  <div class="wl-cols" style="grid-template-columns:14px 52px 56px 40px 62px 32px 30px">
+    <div class="wl-col"></div>
+    <div class="wl-col">Symbol</div>
+    <div class="wl-col right">% Chg</div>
+    <div class="wl-col right">Last</div>
+    <div class="wl-col right">Avg$Vol</div>
+    <div class="wl-col right">ADR</div>
+    <div class="wl-col right">RV</div>
+  </div>
+  <div class="wl-body" id="mega-list"></div>
+  <div style="font-size:8px;color:#9ca3b0;padding:3px 6px;border-top:1px solid var(--border)" id="mega-count">0 of 12 results (0 selected)</div>
+</div>
 
-    <!-- LEADERS -->
-    <div class="wl-section" style="flex:0 0 auto;max-height:30%">
-      <div class="ph">
-        <span class="ph-title">Deepvue Leaders</span>
-        <div class="ph-dot"></div>
-      </div>
-      <div class="wl-cols" style="grid-template-columns:14px 52px 56px 40px 62px 32px 30px">
-        <div class="wl-col"></div>
-        <div class="wl-col">Symbol</div>
-        <div class="wl-col right">% Chg</div>
-        <div class="wl-col right">Last</div>
-        <div class="wl-col right">Avg$Vol</div>
-        <div class="wl-col right">ADR</div>
-        <div class="wl-col right">RV</div>
-      </div>
-      <div class="wl-body" id="leaders-list"></div>
-      <div style="font-size:8px;color:#9ca3b0;padding:3px 6px;border-top:1px solid var(--border)">374 of 391 results (0 selected)</div>
-    </div>
+<!-- LEADERS -->
+<div class="wl-section" style="flex:0 0 auto;max-height:30%">
+  <div class="ph">
+    <span class="ph-title">Deepvue Leaders</span>
+    <div class="ph-dot"></div>
+  </div>
+  <div class="wl-cols" style="grid-template-columns:14px 52px 56px 40px 62px 32px 30px">
+    <div class="wl-col"></div>
+    <div class="wl-col">Symbol</div>
+    <div class="wl-col right">% Chg</div>
+    <div class="wl-col right">Last</div>
+    <div class="wl-col right">Avg$Vol</div>
+    <div class="wl-col right">ADR</div>
+    <div class="wl-col right">RV</div>
+  </div>
+  <div class="wl-body" id="leaders-list"></div>
+  <div style="font-size:8px;color:#9ca3b0;padding:3px 6px;border-top:1px solid var(--border)">374 of 391 results (0 selected)</div>
+</div>
+```
 
   </div>
 </div>
@@ -502,9 +515,11 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:#111827;font-fa
 <!-- ══════════════════════════════════════════════════════════
      DEEP DIVE VIEW  (hidden by default, shown via tab)
 ════════════════════════════════════════════════════════════ -->
+
 <div id="deep-dive">
 
   <!-- PANE 1: Finviz Themes Map -->
+
   <div class="dd-pane">
     <div class="dd-head">
       <span style="width:6px;height:6px;border-radius:50%;background:#2a9df4;box-shadow:0 0 5px #2a9df4;flex-shrink:0"></span>
@@ -522,6 +537,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:#111827;font-fa
   </div>
 
   <!-- PANE 2: Stockbee Market Monitor -->
+
   <div class="dd-pane">
     <div class="dd-head">
       <span style="width:6px;height:6px;border-radius:50%;background:#00c878;box-shadow:0 0 5px #00c878;flex-shrink:0"></span>
@@ -539,6 +555,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:#111827;font-fa
   </div>
 
   <!-- PANE 3: US Indices -->
+
   <div id="dd-indices">
     <div class="dd-head" style="background:var(--bg2);border-bottom:1px solid var(--border)">
       <span style="width:6px;height:6px;border-radius:50%;background:#f5a623;box-shadow:0 0 5px #f5a623;flex-shrink:0"></span>
@@ -547,78 +564,85 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:#111827;font-fa
     </div>
     <div style="overflow-y:auto;flex:1">
 
-      <!-- MAJOR AVERAGES -->
-      <div class="idx-group">
-        <div class="idx-group-title">Major Averages</div>
-        <div id="dd-majors"></div>
-      </div>
+```
+  <!-- MAJOR AVERAGES -->
+  <div class="idx-group">
+    <div class="idx-group-title">Major Averages</div>
+    <div id="dd-majors"></div>
+  </div>
 
-      <!-- SECTOR ETFs -->
-      <div class="idx-group">
-        <div class="idx-group-title">SPDR Sector ETFs</div>
-        <div id="dd-sectors"></div>
-      </div>
+  <!-- SECTOR ETFs -->
+  <div class="idx-group">
+    <div class="idx-group-title">SPDR Sector ETFs</div>
+    <div id="dd-sectors"></div>
+  </div>
 
-      <!-- VOLATILITY & RATES -->
-      <div class="idx-group">
-        <div class="idx-group-title">Vol · Rates · Commodities</div>
-        <div id="dd-volrates"></div>
-      </div>
+  <!-- VOLATILITY & RATES -->
+  <div class="idx-group">
+    <div class="idx-group-title">Vol · Rates · Commodities</div>
+    <div id="dd-volrates"></div>
+  </div>
 
-      <!-- INTERNATIONAL -->
-      <div class="idx-group">
-        <div class="idx-group-title">International</div>
-        <div id="dd-intl"></div>
-      </div>
+  <!-- INTERNATIONAL -->
+  <div class="idx-group">
+    <div class="idx-group-title">International</div>
+    <div id="dd-intl"></div>
+  </div>
 
-    </div>
-    <div class="dd-notice">
-      <strong>Finviz Themes:</strong> Tracks AI, Biotech, Defense, EV, Fintech, Crypto, Uranium, Space, Quantum + 20 more.<br>
-      <strong>Stockbee MM:</strong> Red = distribution. Green = accumulation. Ratio &lt;0.5 = extreme sell.<br>
-      <span style="color:#9ca3b0">Data: Feb 26, 2026 confirmed close</span>
-    </div>
+</div>
+<div class="dd-notice">
+  <strong>Finviz Themes:</strong> Tracks AI, Biotech, Defense, EV, Fintech, Crypto, Uranium, Space, Quantum + 20 more.<br>
+  <strong>Stockbee MM:</strong> Red = distribution. Green = accumulation. Ratio &lt;0.5 = extreme sell.<br>
+  <span style="color:#9ca3b0">Data: Feb 26, 2026 confirmed close</span>
+</div>
+```
+
   </div>
 
 </div>
 
 <!-- ── MODAL ── -->
+
 <div id="modal" onclick="closeModalBg(event)">
   <div class="mbox">
 
-    <!-- Header row -->
-    <div class="mhead">
-      <button class="m-back-btn" onclick="closeModal()">‹ Back</button>
-      <span class="mbadge" id="m-badge">XLF</span>
-      <div style="flex:1;min-width:0">
-        <div class="mtitle" id="m-title">Financials</div>
-        <div class="msub" id="m-sub">Loading…</div>
-      </div>
-      <span class="m-filter-badge">MCap &gt; $1B · Sorted ▼ Today %</span>
-      <button class="mclose" onclick="closeModal()">✕</button>
-    </div>
+```
+<!-- Header row -->
+<div class="mhead">
+  <button class="m-back-btn" onclick="closeModal()">‹ Back</button>
+  <span class="mbadge" id="m-badge">XLF</span>
+  <div style="flex:1;min-width:0">
+    <div class="mtitle" id="m-title">Financials</div>
+    <div class="msub" id="m-sub">Loading…</div>
+  </div>
+  <span class="m-filter-badge">MCap &gt; $1B · Sorted ▼ Today %</span>
+  <button class="mclose" onclick="closeModal()">✕</button>
+</div>
 
-    <!-- Stats strip -->
-    <div class="mstats" id="m-stats"></div>
+<!-- Stats strip -->
+<div class="mstats" id="m-stats"></div>
 
-    <!-- Column headers — matching Image 2 exactly -->
-    <div class="mp-col-header">
-      <div class="mp-ch mp-ch-ticker">Ticker</div>
-      <div class="mp-ch mp-ch-vol">$ Vol</div>
-      <div class="mp-ch mp-ch-tf" id="mh-today" onclick="setModalSort('chg1d')" style="color:#4db8ff">Today ▼</div>
-      <div class="mp-ch mp-ch-tf" id="mh-1w"    onclick="setModalSort('chg1m')">1W</div>
-      <div class="mp-ch mp-ch-tf" id="mh-1m"    onclick="setModalSort('chg1m')">1M</div>
-      <div class="mp-ch mp-ch-tf" id="mh-3m"    onclick="setModalSort('chg3m')">3M</div>
-      <div class="mp-ch mp-ch-tf" id="mh-ytd"   onclick="setModalSort('chg3m')">YTD</div>
-    </div>
+<!-- Column headers — matching Image 2 exactly -->
+<div class="mp-col-header">
+  <div class="mp-ch mp-ch-ticker">Ticker</div>
+  <div class="mp-ch mp-ch-vol">$ Vol</div>
+  <div class="mp-ch mp-ch-tf" id="mh-today" onclick="setModalSort('chg1d')" style="color:#4db8ff">Today ▼</div>
+  <div class="mp-ch mp-ch-tf" id="mh-1w"    onclick="setModalSort('chg1m')">1W</div>
+  <div class="mp-ch mp-ch-tf" id="mh-1m"    onclick="setModalSort('chg1m')">1M</div>
+  <div class="mp-ch mp-ch-tf" id="mh-3m"    onclick="setModalSort('chg3m')">3M</div>
+  <div class="mp-ch mp-ch-tf" id="mh-ytd"   onclick="setModalSort('chg3m')">YTD</div>
+</div>
 
-    <!-- Stock rows -->
-    <div class="mp-list" id="m-grid"></div>
+<!-- Stock rows -->
+<div class="mp-list" id="m-grid"></div>
 
-    <!-- Footer -->
-    <div class="mfooter">
-      <span class="mf-note">Filter: MCap &gt; $1B only · Click column headers to re-sort · 📈 Chart opens TradingView · FV opens Finviz</span>
-      <span class="mf-ct" id="m-ct"></span>
-    </div>
+<!-- Footer -->
+<div class="mfooter">
+  <span class="mf-note">Filter: MCap &gt; $1B only · Click column headers to re-sort · 📈 Chart opens TradingView · FV opens Finviz</span>
+  <span class="mf-ct" id="m-ct"></span>
+</div>
+```
+
   </div>
 </div>
 
@@ -702,7 +726,7 @@ const THEMES = [
 
 // Indexes watchlist — LIVE Feb 26 2026 confirmed data
 // S&P 6,884 -0.88% | Nasdaq 22,797 -1.53% | Dow 49,378 -0.21% | Russell 2,659 -0.14%
-// VIX 19.42 +8.31% | Gold $5,201 -0.47% | BTC $66,671 -2.06% | 10Y yield 4.023%
+// VIX 19.42 +8.31% | Gold $2,928 -0.47% | BTC $66,671 -2.06% | 10Y yield 4.023%
 const INDEXES = [
   {sym:"SPY",   wt:"3A", name:"SPDR S&P 500 ETF Trust",              chg:-0.88, pos:false, px:"$680"},
   {sym:"QQQ",   wt:"3A", name:"Invesco QQQ Trust (Nasdaq 100)",      chg:-1.53, pos:false, px:"$606"},
@@ -711,7 +735,7 @@ const INDEXES = [
   {sym:"RSP",   wt:"H·2",name:"Invesco Equal Weight S&P 500",        chg:-0.46, pos:false, px:"$173"},
   {sym:"MDY",   wt:"H·2",name:"SPDR S&P MidCap 400 ETF",            chg:-0.22, pos:false, px:"$524"},
   {sym:"IBIT",  wt:"4",  name:"iShares Bitcoin Trust — BTC $66,671", chg:-2.06, pos:false, px:"$50"},
-  {sym:"GLD",   wt:"2",  name:"SPDR Gold Shares — $5,201/oz",        chg:-0.47, pos:false, px:"$472"},
+  {sym:"GLD",   wt:"2",  name:"SPDR Gold Shares — $2,928/oz",        chg:-0.47, pos:false, px:"$272"},
   {sym:"SLV",   wt:"2",  name:"iShares Silver Trust",                chg:-1.20, pos:false, px:"$27"},
   {sym:"COPX",  wt:"2",  name:"Global X Copper Miners ETF",          chg:+2.89, pos:true,  px:"$96"},
   {sym:"TLT",   wt:"2A", name:"iShares 20+ Year Treasury — 4.02%",   chg:+0.62, pos:true,  px:"$89"},
@@ -979,7 +1003,7 @@ const TAPE_DATA=[
   {sym:"MSFT", price:"400.04", chg:"+0.14%", pos:true},
   {sym:"META", price:"637.40", chg:"-0.28%", pos:false},
   {sym:"PLTR", price:"135.03", chg:"+0.62%", pos:true},
-  {sym:"GLD",  price:"472.00", chg:"-0.47%", pos:false},
+  {sym:"GLD",  price:"272.00", chg:"-0.47%", pos:false},
   {sym:"IWM",  price:"264.20", chg:"-0.14%", pos:false},
   {sym:"TTD",  price:"55.40",  chg:"-16.0%", pos:false},
   {sym:"AMAT", price:"157.80", chg:"-6.20%", pos:false},
@@ -1289,7 +1313,7 @@ function updateClock(){
     n.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'})+' · '+
     n.toLocaleTimeString('en-US',{hour12:true,hour:'2-digit',minute:'2-digit',second:'2-digit'});
 }
-setInterval(updateClock,1000);
+// clock managed in init()
 
 // ════════════════════════════════════════════════════════════
 // DEEP DIVE — US INDICES DATA
@@ -1322,7 +1346,7 @@ const DD_VOLRATES=[
   {sym:"VXX",  name:"VIX Short-Term ETN",px:"24.80",  chg:+8.31, vol:"$1.8B"},
   {sym:"TLT",  name:"20Y Treasury ETF",  px:"89.20",  chg:+0.62, vol:"$1.6B"},
   {sym:"IEF",  name:"7-10Y Treasury ETF",px:"98.80",  chg:+0.44, vol:"$0.8B"},
-  {sym:"GLD",  name:"Gold ETF",          px:"472.00", chg:-0.47, vol:"$2.4B"},
+  {sym:"GLD",  name:"Gold ETF",          px:"272.00", chg:-0.47, vol:"$2.4B"},
   {sym:"SLV",  name:"Silver ETF",        px:"27.00",  chg:-1.20, vol:"$0.8B"},
   {sym:"COPX", name:"Copper Miners ETF", px:"96.00",  chg:+2.89, vol:"$0.4B"},
   {sym:"USO",  name:"Oil ETF",           px:"72.00",  chg:-0.60, vol:"$0.6B"},
@@ -1364,15 +1388,210 @@ function buildDDIndices(){
 }
 
 // ════════════════════════════════════════════════════════════
-// INIT
 // ════════════════════════════════════════════════════════════
-buildTape();
-buildSectors();
-buildThemes();
-buildIndexes();
-buildMegaCaps();
-buildLeaders();
-updateClock();
+// LIVE DATA — Yahoo Finance (no API key needed)
+// ════════════════════════════════════════════════════════════
+
+// Master price cache: sym -> {price, chg, chgPct, prevClose}
+const PRICE_CACHE = {};
+
+// Collect every unique ticker across all data arrays
+function getAllTickers() {
+  const s = new Set();
+  SECTORS.forEach(x => s.add(x.sym));
+  INDEXES.forEach(x => s.add(x.sym));
+  MEGA_CAPS.forEach(x => s.add(x.sym));
+  LEADERS.forEach(x => s.add(x.sym));
+  TAPE_DATA.forEach(x => s.add(x.sym));
+  Object.values(SECTOR_STOCKS).forEach(arr => arr.forEach(x => s.add(x.sym)));
+  // ETF sector keys used in THEMES
+  ['XLF','XLV','XLK','XLY','XLE','XLU','XLI','XLP','XLRE','XLB','XLC',
+   'SMH','GLD','SLV','COPX','URA','TLT','IWM','VXX','IBIT','USO'].forEach(t=>s.add(t));
+  return [...s];
+}
+
+// Fetch quotes in batches of 20 from Yahoo Finance
+async function fetchYahooQuotes(tickers) {
+  const batchSize = 20;
+  const batches = [];
+  for (let i = 0; i < tickers.length; i += batchSize) {
+    batches.push(tickers.slice(i, i + batchSize));
+  }
+  for (const batch of batches) {
+    try {
+      const syms = batch.join(',');
+      const url = `https://query1.finance.yahoo.com/v7/finance/quote?symbols=${syms}&fields=regularMarketPrice,regularMarketChangePercent,regularMarketChange,regularMarketPreviousClose,shortName`;
+      const resp = await fetch(url);
+      if (!resp.ok) continue;
+      const data = await resp.json();
+      const results = data?.quoteResponse?.result || [];
+      results.forEach(q => {
+        PRICE_CACHE[q.symbol] = {
+          price: q.regularMarketPrice,
+          chg: q.regularMarketChange,
+          chgPct: q.regularMarketChangePercent,
+          prevClose: q.regularMarketPreviousClose,
+          name: q.shortName || q.symbol
+        };
+      });
+    } catch(e) {
+      console.warn('Yahoo fetch error:', e);
+    }
+  }
+}
+
+// Patch all data arrays with live prices
+function patchWithLiveData() {
+  function getPct(sym) {
+    return PRICE_CACHE[sym] ? PRICE_CACHE[sym].chgPct : null;
+  }
+  function getPx(sym) {
+    return PRICE_CACHE[sym] ? PRICE_CACHE[sym].price : null;
+  }
+
+  // Map sector ETF sym -> sector key for SECTORS/THEMES
+  const SECTOR_ETF_MAP = {
+    XLF:'finance', XLV:'health', XLK:'tech', XLY:'consdisc', XLE:'energy',
+    XLU:'utilities', XLI:'industrial', XLP:'consdef', XLRE:'realestate',
+    XLB:'materials', XLC:'comms', SMH:'tech', IWM:'index', GLD:'commodity',
+    COPX:'materials', URA:'utilities', TLT:'index', VXX:'index', IBIT:'btcminers'
+  };
+
+  // Patch SECTORS
+  SECTORS.forEach(s => {
+    const p = getPct(s.sym);
+    if (p !== null) { s.open = p; s.w = p; }
+    const px = getPx(s.sym);
+    if (px !== null) s.px = '$' + px.toFixed(2);
+  });
+
+  // Patch THEMES — use their matching ETF or best proxy
+  const THEME_ETF = {
+    'Financials':'XLF','Copper Miners':'COPX','Uranium':'URA','Defense/Aero':'ITA',
+    'Biotech':'XBI','Real Estate':'XLRE','Healthcare':'XLV','Gold Miners':'GLD',
+    'Treasuries':'TLT','Small Cap':'IWM','Energy':'XLE','Pharma (GLP-1)':'XLV',
+    'Banks':'XLF','Comm. Services':'XLC','Industrials':'XLI','Consumer Disc.':'XLY',
+    'Materials':'XLB','Technology':'XLK','Silver':'SLV','Cybersecurity':'HACK',
+    'AI / Software':'IGV','Semiconductors':'SMH','Bitcoin Miners':'IBIT',
+    'ARK Innovation':'ARKK','Robotics & AI':'BOTZ','EV / Battery':'DRIV',
+    'Clean Energy':'ICLN','Lithium':'LIT','NVDA / Semis':'NVDA','Social Media':'SNAP'
+  };
+  THEMES.forEach(t => {
+    const etf = THEME_ETF[t.name];
+    const p = etf ? getPct(etf) : getPct(t.sk);
+    if (p !== null) { t.open = p; t.w = p; }
+  });
+
+  // Patch INDEXES
+  INDEXES.forEach(idx => {
+    const p = getPct(idx.sym);
+    if (p !== null) idx.chg = p;
+    const px = getPx(idx.sym);
+    if (px !== null) idx.px = '$' + px.toFixed(2);
+  });
+
+  // Patch MEGA_CAPS
+  MEGA_CAPS.forEach(m => {
+    const p = getPct(m.sym);
+    if (p !== null) m.chg = p;
+    const px = getPx(m.sym);
+    if (px !== null) m.px = '$' + px.toFixed(2);
+    m.rvHigh = Math.abs(m.chg) > 3;
+  });
+
+  // Patch LEADERS
+  LEADERS.forEach(l => {
+    const p = getPct(l.sym);
+    if (p !== null) l.chg = p;
+    const px = getPx(l.sym);
+    if (px !== null) l.px = '$' + px.toFixed(2);
+  });
+
+  // Patch TAPE_DATA
+  TAPE_DATA.forEach(t => {
+    const d = PRICE_CACHE[t.sym];
+    if (d) {
+      t.price = d.price.toFixed(2);
+      const p = d.chgPct;
+      t.chg = (p >= 0 ? '+' : '') + p.toFixed(2) + '%';
+      t.pos = p >= 0;
+    }
+  });
+
+  // Patch SECTOR_STOCKS
+  Object.values(SECTOR_STOCKS).forEach(arr => {
+    arr.forEach(s => {
+      const d = PRICE_CACHE[s.sym];
+      if (d) {
+        s.price = d.price.toFixed(2);
+        s.chg1d = d.chgPct;
+      }
+    });
+  });
+}
+
+// Loading overlay
+function showLoading() {
+  const el = document.createElement('div');
+  el.id = 'live-loader';
+  el.innerHTML = `<div style="position:fixed;inset:0;z-index:9999;background:rgba(255,255,255,.92);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px">
+    <div style="font-size:13px;font-weight:700;color:#111827;font-family:'IBM Plex Mono',monospace">⚡ Loading live market data…</div>
+    <div style="font-size:10px;color:#9ca3af;font-family:'IBM Plex Mono',monospace">Fetching prices from Yahoo Finance</div>
+    <div style="width:200px;height:3px;background:#e5e7eb;border-radius:2px;overflow:hidden">
+      <div id="load-bar" style="height:100%;width:0%;background:#2a9df4;border-radius:2px;transition:width .4s"></div>
+    </div>
+  </div>`;
+  document.body.appendChild(el);
+}
+function hideLoading() {
+  const el = document.getElementById('live-loader');
+  if (el) el.remove();
+}
+function setLoadBar(pct) {
+  const b = document.getElementById('load-bar');
+  if (b) b.style.width = pct + '%';
+}
+
+// ── INIT (with live data) ──
+async function init() {
+  showLoading();
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  try {
+    const tickers = getAllTickers();
+    setLoadBar(20);
+    await fetchYahooQuotes(tickers);
+    setLoadBar(80);
+    patchWithLiveData();
+    setLoadBar(100);
+  } catch(e) {
+    console.warn('Live data failed, using static fallback:', e);
+  }
+
+  hideLoading();
+  buildTape();
+  buildSectors();
+  buildThemes();
+  buildIndexes();
+  buildMegaCaps();
+  buildLeaders();
+
+  // Auto-refresh every 2 minutes
+  setInterval(async () => {
+    const tickers = getAllTickers();
+    await fetchYahooQuotes(tickers);
+    patchWithLiveData();
+    buildTape();
+    buildSectors();
+    buildThemes();
+    buildIndexes();
+    buildMegaCaps();
+    buildLeaders();
+  }, 120000);
+}
+
+init();
 
 // ── BREADTH DATA ──
 const BD=[
