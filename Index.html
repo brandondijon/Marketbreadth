@@ -190,6 +190,22 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:#111827;font-fa
 .mfooter{padding:6px 14px;border-top:1px solid #e8ecf2;flex-shrink:0;display:flex;align-items:center;gap:10px;background:#f9fafb}
 .mf-note{font-size:8px;color:#9ca3af}
 .mf-ct{font-size:9px;font-weight:700;color:#f5a623;margin-left:auto}
+/* MOMENTUM ROWS */
+.mom-row{display:grid;grid-template-columns:36px 52px 1fr 56px 44px;padding:5px 8px;border-bottom:1px solid var(--border);cursor:pointer;align-items:center;transition:background .1s}
+.mom-row:hover{background:#f5f8ff}
+.mom-rs{font-size:9px;font-weight:700;padding:1px 4px;border-radius:3px;text-align:center}
+.mom-sym{font-size:10px;font-weight:700;color:#2563eb}
+.mom-nm{font-size:9px;color:#374151;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mom-chg{font-size:10px;font-weight:700;text-align:right}
+.mom-stat{font-size:8px;font-weight:700;text-align:right;padding:1px 4px;border-radius:3px}
+.mom-sectab{padding:2px 7px;border-radius:3px;font-size:8px;font-weight:700;cursor:pointer;border:1px solid var(--border);background:none;color:#9ca3b0;font-family:'IBM Plex Mono',monospace;transition:all .12s;white-space:nowrap}
+.mom-sectab.on{background:#2563eb;color:#fff;border-color:#2563eb}
+/* CHART CELLS */
+.chart-cell{background:var(--bg1);display:flex;flex-direction:column;overflow:hidden;cursor:pointer;position:relative}
+.chart-cell-hd{display:flex;align-items:center;padding:3px 6px;background:var(--bg2);border-bottom:1px solid var(--border);flex-shrink:0;gap:5px}
+.chart-cell-sym{font-size:10px;font-weight:700;color:#111827}
+.chart-cell-chg{font-size:9px;font-weight:700}
+.chart-cell iframe{width:100%;height:100%;border:none;flex:1}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
 @keyframes spin{to{transform:rotate(360deg)}}
 
@@ -315,9 +331,8 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:#111827;font-fa
 <div id="topbar">
   <span class="tb-logo">⚡ Market Monitor</span>
   <button class="tb-tab active" onclick="setMainTab(this,'monitor')">Market Monitor</button>
-  <button class="tb-tab" onclick="setMainTab(this,'execution')">Execution</button>
-  <button class="tb-tab" onclick="setMainTab(this,'clients')">Clients</button>
-  <button class="tb-tab" onclick="setMainTab(this,'sector')">Sector Performance</button>
+  <button class="tb-tab" onclick="setMainTab(this,'momentum')">🚀 Momentum</button>
+  <button class="tb-tab" onclick="setMainTab(this,'multicharts')">📈 Charts</button>
   <button class="tb-tab" onclick="setMainTab(this,'movers')">Strong Movers</button>
   <button class="tb-tab" onclick="setMainTab(this,'deepdive')" style="border-left:1px solid var(--border);margin-left:4px;padding-left:14px;color:var(--blue2)">🔬 Deep Dive</button>
   <button class="tb-tab" onclick="setMainTab(this,'breadth')">📊 Breadth</button>
@@ -419,8 +434,9 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:#111827;font-fa
   <div id="center">
     <div id="theme-panel">
       <div class="ph">
-        <span class="ph-title">Theme Tracker</span>
-        <span style="font-size:8px;color:#9ca3b0;margin-left:4px">· Click to drill in</span><div class="tvtog"><button class="tvt on" id="tvt-g" onclick="setTV('grid')">&#x229E;</button><button class="tvt" id="tvt-l" onclick="setTV('list')">&#x2261;</button></div>
+        <button id="theme-back-btn" onclick="closeThemeDrill()" style="display:none;padding:2px 8px;border-radius:3px;font-size:9px;font-weight:700;cursor:pointer;border:1px solid var(--border2);background:none;color:#374151;font-family:'IBM Plex Mono',monospace;margin-right:4px">‹ Back</button>
+        <span class="ph-title" id="theme-panel-title">Theme Tracker</span>
+        <span id="theme-panel-sub" style="font-size:8px;color:#9ca3b0;margin-left:4px">· Click to drill in</span><div class="tvtog"><button class="tvt on" id="tvt-g" onclick="setTV('grid')">&#x229E;</button><button class="tvt" id="tvt-l" onclick="setTV('list')">&#x2261;</button></div>
         <div class="ph-dot"></div>
       </div>
       <div class="tf-tabs" id="theme-tf">
@@ -602,8 +618,82 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:#111827;font-fa
 
 </div>
 
-<!-- ── MODAL ── -->
+<!-- ══════════════════════════════════════════════════════════
+     MOMENTUM VIEW
+════════════════════════════════════════════════════════════ -->
 
+<div id="momentum-view" style="display:none;height:calc(100vh - 50px);overflow:hidden;display:none;flex-direction:column">
+  <div style="display:grid;grid-template-columns:1fr 1fr;height:100%;gap:1px;background:var(--border)">
+
+```
+<!-- LEFT: Sector ETF Breakdown (RS90+, 10 per sector) -->
+<div style="background:var(--bg1);display:flex;flex-direction:column;overflow:hidden">
+  <div class="ph" style="height:32px">
+    <span class="ph-title">Sector Leaders · RS 90+</span>
+    <span style="font-size:8px;color:#9ca3b0;margin-left:4px">Top 10 per sector · Live Yahoo data</span>
+    <div class="ph-dot"></div>
+  </div>
+  <!-- Sector tabs -->
+  <div id="mom-sector-tabs" style="display:flex;flex-wrap:wrap;gap:2px;padding:4px 6px;background:var(--bg2);border-bottom:1px solid var(--border);flex-shrink:0"></div>
+  <!-- Column headers -->
+  <div style="display:grid;grid-template-columns:36px 52px 1fr 56px 44px;gap:0;padding:4px 8px;background:var(--bg2);border-bottom:1px solid var(--border);flex-shrink:0;font-size:8px;color:#9ca3b0;font-weight:700;text-transform:uppercase;letter-spacing:.08em">
+    <div>RS</div><div>Ticker</div><div>Company</div><div style="text-align:right">% Today</div><div style="text-align:right">Status</div>
+  </div>
+  <div id="mom-stock-list" style="overflow-y:auto;flex:1"></div>
+</div>
+
+<!-- RIGHT: Momentum Leaders + Hedge Fund Accumulation -->
+<div style="background:var(--bg1);display:flex;flex-direction:column;overflow:hidden">
+
+  <!-- Momentum Leaders -->
+  <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;border-bottom:1px solid var(--border)">
+    <div class="ph" style="height:32px">
+      <span class="ph-title">🚀 Momentum Leaders</span>
+      <span style="font-size:8px;color:#9ca3b0;margin-left:4px">RS 90+ · Trending up · Live</span>
+      <div class="ph-dot"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:36px 52px 1fr 56px 56px;gap:0;padding:4px 8px;background:var(--bg2);border-bottom:1px solid var(--border);flex-shrink:0;font-size:8px;color:#9ca3b0;font-weight:700;text-transform:uppercase;letter-spacing:.08em">
+      <div>RS</div><div>Ticker</div><div>Company</div><div style="text-align:right">Today</div><div style="text-align:right">1M</div>
+    </div>
+    <div id="mom-leaders-list" style="overflow-y:auto;flex:1"></div>
+  </div>
+
+  <!-- Hedge Fund Accumulation -->
+  <div style="flex:1;display:flex;flex-direction:column;overflow:hidden">
+    <div class="ph" style="height:32px">
+      <span class="ph-title">🏦 Hedge Fund Accumulation</span>
+      <span style="font-size:8px;color:#9ca3b0;margin-left:4px">Institutional buying · High RS</span>
+      <div class="ph-dot"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:36px 52px 1fr 56px 56px;gap:0;padding:4px 8px;background:var(--bg2);border-bottom:1px solid var(--border);flex-shrink:0;font-size:8px;color:#9ca3b0;font-weight:700;text-transform:uppercase;letter-spacing:.08em">
+      <div>RS</div><div>Ticker</div><div>Company</div><div style="text-align:right">Today</div><div style="text-align:right">Vol</div>
+    </div>
+    <div id="mom-hf-list" style="overflow-y:auto;flex:1"></div>
+  </div>
+
+</div>
+```
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     MULTI-CHARTS VIEW
+════════════════════════════════════════════════════════════ -->
+
+<div id="multicharts-view" style="display:none;height:calc(100vh - 50px);overflow:hidden;flex-direction:column">
+  <div style="display:flex;align-items:center;padding:6px 12px;background:var(--bg2);border-bottom:1px solid var(--border);gap:8px;flex-shrink:0">
+    <span style="font-size:9px;font-weight:700;color:#374151;text-transform:uppercase;letter-spacing:.08em">Chart Overview · 10 Stocks</span>
+    <span style="font-size:8px;color:#9ca3b0">Click any chart to open full TradingView</span>
+    <div style="margin-left:auto;display:flex;gap:4px">
+      <button onclick="loadChartSet('leaders')" id="cs-leaders" style="padding:2px 10px;border-radius:3px;font-size:9px;font-weight:700;cursor:pointer;border:1px solid #2563eb;background:#2563eb;color:#fff;font-family:'IBM Plex Mono',monospace">Leaders</button>
+      <button onclick="loadChartSet('indexes')" id="cs-indexes" style="padding:2px 10px;border-radius:3px;font-size:9px;font-weight:700;cursor:pointer;border:1px solid var(--border2);background:none;color:#374151;font-family:'IBM Plex Mono',monospace">Indexes</button>
+      <button onclick="loadChartSet('sectors')" id="cs-sectors" style="padding:2px 10px;border-radius:3px;font-size:9px;font-weight:700;cursor:pointer;border:1px solid var(--border2);background:none;color:#374151;font-family:'IBM Plex Mono',monospace">Sectors</button>
+      <button onclick="loadChartSet('momentum')" id="cs-momentum" style="padding:2px 10px;border-radius:3px;font-size:9px;font-weight:700;cursor:pointer;border:1px solid var(--border2);background:none;color:#374151;font-family:'IBM Plex Mono',monospace">Momentum</button>
+    </div>
+  </div>
+  <div id="chart-grid" style="display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:repeat(2,1fr);flex:1;gap:1px;background:var(--border);overflow:hidden;height:calc(100vh - 82px)"></div>
+</div> -->
 <div id="modal" onclick="closeModalBg(event)">
   <div class="mbox">
 
@@ -1298,11 +1388,20 @@ function setMainTab(el,tab){
   const main=document.getElementById('main');
   const dd=document.getElementById('deep-dive');
   const bv=document.getElementById('breadth-view');
-  main.style.display='';
+  const mv=document.getElementById('momentum-view');
+  const cv=document.getElementById('multicharts-view');
+  // hide all
+  main.style.display='none';
   dd.classList.remove('visible');
   bv.style.display='none';
-  if(tab==='deepdive'){main.style.display='none';dd.classList.add('visible');buildDDIndices();}
-  else if(tab==='breadth'){main.style.display='none';bv.style.display='block';buildBreadthTable();}
+  mv.style.display='none';
+  cv.style.display='none';
+  if(tab==='monitor'){main.style.display='';}
+  else if(tab==='deepdive'){dd.classList.add('visible');buildDDIndices();}
+  else if(tab==='breadth'){bv.style.display='block';buildBreadthTable();}
+  else if(tab==='momentum'){mv.style.display='flex';buildMomentumView();}
+  else if(tab==='multicharts'){cv.style.display='flex';buildMultiCharts('leaders');}
+  else{main.style.display='';}
 }
 
 // ════════════════════════════════════════════════════════════
@@ -1795,7 +1894,194 @@ function buildSMnews(sym,name){
     </div>`).join('');
 }
 
-// ── THEME LIST VIEW ──
+// ════════════════════════════════════════════════════════════
+// THEME BACK BUTTON
+// ════════════════════════════════════════════════════════════
+let _themeGridHTML='', _themeListHTML='';
+function saveThemeState(){
+  _themeGridHTML=document.getElementById('heatmap-grid').innerHTML;
+  _themeListHTML=document.getElementById('theme-list').innerHTML;
+}
+function closeThemeDrill(){
+  document.getElementById('heatmap-grid').innerHTML=_themeGridHTML;
+  document.getElementById('theme-list').innerHTML=_themeListHTML;
+  document.getElementById('theme-back-btn').style.display='none';
+  document.getElementById('theme-panel-title').textContent='Theme Tracker';
+  document.getElementById('theme-panel-sub').style.display='';
+}
+
+// ════════════════════════════════════════════════════════════
+// MOMENTUM VIEW
+// ════════════════════════════════════════════════════════════
+const SECTOR_DEFS = [
+  {key:'tech',      sym:'XLK',  label:'Technology'},
+  {key:'finance',   sym:'XLF',  label:'Financials'},
+  {key:'health',    sym:'XLV',  label:'Health Care'},
+  {key:'industrial',sym:'XLI',  label:'Industrials'},
+  {key:'energy',    sym:'XLE',  label:'Energy'},
+  {key:'consdisc',  sym:'XLY',  label:'Cons Disc'},
+  {key:'consdef',   sym:'XLP',  label:'Cons Staples'},
+  {key:'comms',     sym:'XLC',  label:'Comm Svcs'},
+  {key:'realestate',sym:'XLRE', label:'Real Estate'},
+  {key:'materials', sym:'XLB',  label:'Materials'},
+  {key:'utilities', sym:'XLU',  label:'Utilities'},
+  {key:'btcminers', sym:'IBIT', label:'Bitcoin'},
+  {key:'arkk',      sym:'ARKK', label:'ARK/Innov'},
+];
+
+let momActiveSector='tech';
+let momBuilt=false;
+
+async function buildMomentumView(){
+  if(!momBuilt){momBuilt=true;}
+  // Build sector tabs
+  const tabsEl=document.getElementById('mom-sector-tabs');
+  tabsEl.innerHTML=SECTOR_DEFS.map(s=>`
+    <button class="mom-sectab${s.key===momActiveSector?' on':''}" onclick="switchMomSector('${s.key}',this)">${s.sym}</button>
+  `).join('');
+  // Render stocks for active sector (RS 90+, top 10)
+  renderMomStocks(momActiveSector);
+  // Render momentum leaders
+  renderMomLeaders();
+  // Render HF accumulation
+  renderHFAccum();
+}
+
+function switchMomSector(key,el){
+  momActiveSector=key;
+  document.querySelectorAll('.mom-sectab').forEach(b=>b.classList.remove('on'));
+  el.classList.add('on');
+  renderMomStocks(key);
+}
+
+function renderMomStocks(key){
+  const stocks=SECTOR_STOCKS[key]||[];
+  // Filter RS>=90, sort by RS desc then chg1d desc, take top 10
+  const filtered=stocks
+    .filter(s=>s.rs>=90)
+    .sort((a,b)=>(b.rs-a.rs)||((b.chg1d||0)-(a.chg1d||0)))
+    .slice(0,10);
+
+  // Try to patch with live data
+  filtered.forEach(s=>{
+    const c=PRICE_CACHE[s.sym];
+    if(c){s.chg1d=c.chgPct;s.price=c.price.toFixed(2);}
+  });
+
+  const el=document.getElementById('mom-stock-list');
+  if(!filtered.length){
+    el.innerHTML='<div style="padding:20px;text-align:center;color:#9ca3af;font-size:10px">No RS 90+ stocks in this sector</div>';
+    return;
+  }
+  el.innerHTML=filtered.map(s=>{
+    const rsCol=s.rs>=98?'#00c878':s.rs>=95?'#f5a623':'#9b8df8';
+    const chgCol=s.chg1d>=0?'#00c878':'#ff3050';
+    const statBg=s.status==='LEADER'?'#dcfce7':s.status==='BOTTLENECK'?'#fef3c7':'#f3f4f6';
+    const statCol=s.status==='LEADER'?'#166534':s.status==='BOTTLENECK'?'#92400e':'#374151';
+    return`<div class="mom-row" onclick="openSM('${s.sym}')">
+      <div class="mom-rs" style="background:${rsCol}22;color:${rsCol}">${s.rs}</div>
+      <div class="mom-sym">${s.sym}</div>
+      <div class="mom-nm">${s.name}</div>
+      <div class="mom-chg" style="color:${chgCol}">${s.chg1d>=0?'+':''}${(s.chg1d||0).toFixed(2)}%</div>
+      <div class="mom-stat" style="background:${statBg};color:${statCol}">${s.status||'—'}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderMomLeaders(){
+  // All stocks across all sectors, RS>=90, sort by chg1d desc, top 20
+  const all=[];
+  Object.values(SECTOR_STOCKS).forEach(arr=>arr.forEach(s=>{
+    if(s.rs>=90&&!all.find(x=>x.sym===s.sym))all.push(s);
+  }));
+  // Patch live
+  all.forEach(s=>{const c=PRICE_CACHE[s.sym];if(c){s.chg1d=c.chgPct;}});
+  all.sort((a,b)=>(b.chg1d||0)-(a.chg1d||0));
+  const top=all.slice(0,20);
+  document.getElementById('mom-leaders-list').innerHTML=top.map(s=>{
+    const rsCol=s.rs>=98?'#00c878':s.rs>=95?'#f5a623':'#9b8df8';
+    const chgCol=s.chg1d>=0?'#00c878':'#ff3050';
+    const m1Col=(s.chg1m||0)>=0?'#00c878':'#ff3050';
+    return`<div class="mom-row" style="grid-template-columns:36px 52px 1fr 56px 56px" onclick="openSM('${s.sym}')">
+      <div class="mom-rs" style="background:${rsCol}22;color:${rsCol}">${s.rs}</div>
+      <div class="mom-sym">${s.sym}</div>
+      <div class="mom-nm">${s.name}</div>
+      <div class="mom-chg" style="color:${chgCol}">${s.chg1d>=0?'+':''}${(s.chg1d||0).toFixed(2)}%</div>
+      <div class="mom-chg" style="color:${m1Col}">${(s.chg1m||0)>=0?'+':''}${(s.chg1m||0).toFixed(1)}%</div>
+    </div>`;
+  }).join('');
+}
+
+function renderHFAccum(){
+  // Stocks with RS>=90 AND high vol (institutional interest) — simulate from our data
+  // Criteria: RS>=95, positive momentum, high dollar volume
+  const all=[];
+  Object.values(SECTOR_STOCKS).forEach(arr=>arr.forEach(s=>{
+    if(s.rs>=95&&!all.find(x=>x.sym===s.sym))all.push(s);
+  }));
+  all.forEach(s=>{const c=PRICE_CACHE[s.sym];if(c){s.chg1d=c.chgPct;}});
+  // Sort by RS then by positive momentum
+  all.sort((a,b)=>(b.rs-a.rs)||((b.chg1m||0)-(a.chg1m||0)));
+  const top=all.slice(0,15);
+  document.getElementById('mom-hf-list').innerHTML=top.map(s=>{
+    const rsCol=s.rs>=98?'#00c878':'#f5a623';
+    const chgCol=(s.chg1d||0)>=0?'#00c878':'#ff3050';
+    return`<div class="mom-row" style="grid-template-columns:36px 52px 1fr 56px 56px" onclick="openSM('${s.sym}')">
+      <div class="mom-rs" style="background:${rsCol}22;color:${rsCol}">${s.rs}</div>
+      <div class="mom-sym">${s.sym}</div>
+      <div class="mom-nm">${s.name}</div>
+      <div class="mom-chg" style="color:${chgCol}">${(s.chg1d||0)>=0?'+':''}${(s.chg1d||0).toFixed(2)}%</div>
+      <div class="mom-nm">${s.vol||'—'}</div>
+    </div>`;
+  }).join('');
+}
+
+// ════════════════════════════════════════════════════════════
+// MULTI-CHARTS VIEW — 10 TradingView embeds (2 rows × 5)
+// ════════════════════════════════════════════════════════════
+const CHART_SETS = {
+  leaders:  ['AVGO','AMD','TSM','AAPL','GOOGL','MSFT','TSLA','PLTR','AMZN','NFLX'],
+  indexes:  ['SPY','QQQ','IWM','DIA','MDY','RSP','GLD','TLT','VXX','IBIT'],
+  sectors:  ['XLF','XLK','XLV','XLI','XLE','XLY','XLP','XLC','XLRE','XLB'],
+  momentum: ['APP','ARM','MRVL','CRWD','NOW','SNOW','NET','AXON','GE','LMT'],
+};
+
+let chartsBuilt=false;
+let currentChartSet='';
+
+function loadChartSet(set){
+  // Update button states
+  ['leaders','indexes','sectors','momentum'].forEach(s=>{
+    const b=document.getElementById('cs-'+s);
+    if(b){b.style.background=s===set?'#2563eb':'none';b.style.color=s===set?'#fff':'#374151';b.style.borderColor=s===set?'#2563eb':'var(--border2)';}
+  });
+  buildMultiCharts(set);
+}
+
+function buildMultiCharts(set='leaders'){
+  currentChartSet=set;
+  const syms=CHART_SETS[set]||CHART_SETS.leaders;
+  const grid=document.getElementById('chart-grid');
+  grid.innerHTML=syms.map(sym=>{
+    const cached=PRICE_CACHE[sym];
+    const chg=cached?cached.chgPct:null;
+    const chgStr=chg!=null?(chg>=0?'+':'')+chg.toFixed(2)+'%':'';
+    const chgCol=chg==null?'#9ca3af':chg>=0?'#00c878':'#ff3050';
+    return`<div class="chart-cell" onclick="window.open('https://www.tradingview.com/chart/?symbol=${sym}','_blank')">
+      <div class="chart-cell-hd">
+        <span class="chart-cell-sym">${sym}</span>
+        <span class="chart-cell-chg" style="color:${chgCol}">${chgStr}</span>
+        <span style="font-size:7px;color:#9ca3af;margin-left:auto">↗ TradingView</span>
+      </div>
+      <iframe src="https://s.tradingview.com/widgetembed/?frameElementId=tv_${sym}&symbol=${encodeURIComponent(sym)}&interval=D&hidesidetoolbar=1&hidetoptoolbar=1&symboledit=1&saveimage=0&toolbarbg=f4f7f9&studies=[]&theme=light&style=1&timezone=America%2FNew_York&withdateranges=0&showpopupbutton=0&studies_overrides={}&overrides={}&enabled_features=[]&disabled_features=[]&locale=en&utm_source=local" 
+        title="${sym}" loading="lazy" scrolling="no" allowtransparency="true" frameborder="0" style="width:100%;flex:1;min-height:0;display:block"></iframe>
+    </div>`;
+  }).join('');
+}
+
+// ════════════════════════════════════════════════════════════
+// THEME LIST VIEW
+// ════════════════════════════════════════════════════════════
 let tvMode='grid';
 function setTV(mode){
   tvMode=mode;
