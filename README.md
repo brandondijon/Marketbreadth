@@ -1,2 +1,2 @@
-# Marketbreadth
-Market breadth dashboard
+# Market-monitor
+Market monitor dashboard
