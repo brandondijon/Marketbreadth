@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
@@ -301,16 +300,13 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:#111827;font-fa
 .tvt{padding:2px 7px;border-radius:3px;font-size:9px;font-weight:700;cursor:pointer;border:1px solid #e2e6ee;background:none;color:#9ca3af;font-family:'IBM Plex Mono',monospace}
 .tvt.on{background:#2563eb;color:#fff;border-color:#2563eb}
 </style>
-
 </head>
 <body>
 
 <!-- TICKER TAPE -->
-
 <div id="tape"><div class="tape-scroll" id="tape-inner"></div></div>
 
 <!-- TOP BAR -->
-
 <div id="topbar">
   <span class="tb-logo">⚡ Market Monitor</span>
   <button class="tb-tab active" onclick="setMainTab(this,'monitor')">Market Monitor</button>
@@ -325,11 +321,9 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:#111827;font-fa
 </div>
 
 <!-- MAIN 3-COL -->
-
 <div id="main">
 
   <!-- ── COL 1: Sector ETFs + Breadth ── -->
-
   <div class="panel">
     <div class="ph">
       <span class="ph-title">Sector ETFs</span>
@@ -346,75 +340,71 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:#111827;font-fa
     </div>
     <div class="scroll-body" id="sector-list"></div>
 
-```
-<!-- Market Breadth -->
-<div id="breadth">
-  <div class="b-title" style="display:flex;align-items:center;justify-content:space-between;">
-    <span>Market Breadth</span>
-    <a href="breadth.html" target="_blank" style="font-size:9px;color:var(--blue2);text-decoration:none;letter-spacing:0.06em;opacity:0.8">FULL VIEW ↗</a>
-  </div>
+    <!-- Market Breadth -->
+    <div id="breadth">
+      <div class="b-title" style="display:flex;align-items:center;justify-content:space-between;">
+        <span>Market Breadth</span>
+        <a href="breadth.html" target="_blank" style="font-size:9px;color:var(--blue2);text-decoration:none;letter-spacing:0.06em;opacity:0.8">FULL VIEW ↗</a>
+      </div>
 
-  <!-- PARTICIPATION -->
-  <div style="font-size:9px;color:var(--blue2);text-transform:uppercase;letter-spacing:0.1em;margin:8px 0 5px;font-weight:700;">① Participation — % Above DMA</div>
-  <div class="b-row"><span class="b-label">20-Day DMA</span><span class="b-val" style="color:var(--amber)">44%</span></div>
-  <div class="b-track"><div class="b-fill" style="width:44%;background:#d1d5db"></div></div>
-  <div class="b-sub"><span>Narrow — semi rout hit short-term</span></div>
+      <!-- PARTICIPATION -->
+      <div style="font-size:9px;color:var(--blue2);text-transform:uppercase;letter-spacing:0.1em;margin:8px 0 5px;font-weight:700;">① Participation — % Above DMA</div>
+      <div class="b-row"><span class="b-label">20-Day DMA</span><span class="b-val" style="color:var(--amber)">44%</span></div>
+      <div class="b-track"><div class="b-fill" style="width:44%;background:#d1d5db"></div></div>
+      <div class="b-sub"><span>Narrow — semi rout hit short-term</span></div>
 
-  <div class="b-row"><span class="b-label">50-Day DMA</span><span class="b-val" style="color:var(--amber)">51%</span></div>
-  <div class="b-track"><div class="b-fill" style="width:51%;background:#d1d5db"></div></div>
+      <div class="b-row"><span class="b-label">50-Day DMA</span><span class="b-val" style="color:var(--amber)">51%</span></div>
+      <div class="b-track"><div class="b-fill" style="width:51%;background:#d1d5db"></div></div>
 
-  <div class="b-row"><span class="b-label">200-Day DMA</span><span class="b-val" style="color:var(--green)">68%</span></div>
-  <div class="b-track"><div class="b-fill" style="width:68%;background:#d1d5db"></div></div>
-  <div class="b-sub"><span>Foundation intact · Bull trend</span></div>
+      <div class="b-row"><span class="b-label">200-Day DMA</span><span class="b-val" style="color:var(--green)">68%</span></div>
+      <div class="b-track"><div class="b-fill" style="width:68%;background:#d1d5db"></div></div>
+      <div class="b-sub"><span>Foundation intact · Bull trend</span></div>
 
-  <!-- McCLELLAN -->
-  <div style="font-size:9px;color:#d500f9;text-transform:uppercase;letter-spacing:0.1em;margin:10px 0 5px;font-weight:700;">② Momentum — McClellan Oscillator</div>
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
-    <div style="display:flex;align-items:baseline;gap:6px;">
-      <span style="font-size:26px;font-weight:700;color:var(--red);letter-spacing:-1px;font-family:var(--mono)">−62</span>
-      <span style="font-size:9px;color:#9ca3af">NYSE MCO</span>
+      <!-- McCLELLAN -->
+      <div style="font-size:9px;color:#d500f9;text-transform:uppercase;letter-spacing:0.1em;margin:10px 0 5px;font-weight:700;">② Momentum — McClellan Oscillator</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+        <div style="display:flex;align-items:baseline;gap:6px;">
+          <span style="font-size:26px;font-weight:700;color:var(--red);letter-spacing:-1px;font-family:var(--mono)">−62</span>
+          <span style="font-size:9px;color:#9ca3af">NYSE MCO</span>
+        </div>
+        <div style="font-size:9px;padding:2px 7px;background:#f3f4f6;color:#374151;border-radius:8px;font-weight:700;letter-spacing:0.08em;">OVERSOLD</div>
+      </div>
+      <div class="b-track" style="height:8px;">
+        <!-- gauge: 0%=−150, 50%=0, 100%=+150 · −62 ≈ 29% -->
+        <div class="b-fill" style="width:29%;background:#d1d5db;height:8px;border-radius:4px;"></div>
+      </div>
+      <div class="b-sub"><span style="color:var(--red)">Below −50 · Bounce potential</span><span>Sum: −2,140</span></div>
+
+      <!-- NH / NL -->
+      <div style="font-size:9px;color:var(--green);text-transform:uppercase;letter-spacing:0.1em;margin:10px 0 5px;font-weight:700;">③ Strength — Net New Highs / Lows</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+        <span style="font-size:22px;font-weight:700;color:var(--green);letter-spacing:-0.5px">163<span style="font-size:9px;font-weight:400;color:#9ca3af;margin-left:3px">NH</span></span>
+        <span style="font-size:10px;color:#9ca3af">Net <strong style="color:var(--green)">+59</strong></span>
+        <span style="font-size:22px;font-weight:700;color:var(--red);letter-spacing:-0.5px">104<span style="font-size:9px;font-weight:400;color:#9ca3af;margin-left:3px">NL</span></span>
+      </div>
+      <div class="b-track">
+        <div style="position:absolute;top:0;left:0;height:100%;width:44%;background:#e5e7eb;border-radius:4px 0 0 4px;"></div>
+        <div style="position:absolute;top:0;right:0;height:100%;width:56%;background:#d1d5db;border-radius:0 4px 4px 0;"></div>
+      </div>
+      <div class="b-sub" style="position:relative;"><span style="color:var(--green)">61% NH ratio · Leaders still leading</span></div>
+
+      <!-- VOLUME -->
+      <div style="font-size:9px;color:var(--amber);text-transform:uppercase;letter-spacing:0.1em;margin:10px 0 5px;font-weight:700;">④ Volume — Conviction (NYSE)</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:5px;">
+        <div><span style="font-size:16px;font-weight:700;color:var(--green)">3.12B</span> <span style="font-size:9px;color:#9ca3af">↑ Up</span></div>
+        <div><span style="font-size:9px;color:#9ca3af">38% / </span><span style="font-size:9px;color:#9ca3af">62%</span></div>
+        <div><span style="font-size:16px;font-weight:700;color:var(--red)">5.08B</span> <span style="font-size:9px;color:#9ca3af">↓ Down</span></div>
+      </div>
+      <div style="height:12px;background:#f0f4fb;border-radius:5px;overflow:hidden;display:flex;">
+        <div style="flex:3.12;background:#e5e7eb;border-radius:5px 0 0 5px;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#374151;">38%</div>
+        <div style="flex:5.08;background:#d1d5db;border-radius:0 5px 5px 0;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#374151;">62%</div>
+      </div>
+      <div class="b-sub"><span style="color:var(--red);font-weight:600">⚠ Distribution Day #3</span><span>NVDA 211M shares</span></div>
+
     </div>
-    <div style="font-size:9px;padding:2px 7px;background:#f3f4f6;color:#374151;border-radius:8px;font-weight:700;letter-spacing:0.08em;">OVERSOLD</div>
-  </div>
-  <div class="b-track" style="height:8px;">
-    <!-- gauge: 0%=−150, 50%=0, 100%=+150 · −62 ≈ 29% -->
-    <div class="b-fill" style="width:29%;background:#d1d5db;height:8px;border-radius:4px;"></div>
-  </div>
-  <div class="b-sub"><span style="color:var(--red)">Below −50 · Bounce potential</span><span>Sum: −2,140</span></div>
-
-  <!-- NH / NL -->
-  <div style="font-size:9px;color:var(--green);text-transform:uppercase;letter-spacing:0.1em;margin:10px 0 5px;font-weight:700;">③ Strength — Net New Highs / Lows</div>
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
-    <span style="font-size:22px;font-weight:700;color:var(--green);letter-spacing:-0.5px">163<span style="font-size:9px;font-weight:400;color:#9ca3af;margin-left:3px">NH</span></span>
-    <span style="font-size:10px;color:#9ca3af">Net <strong style="color:var(--green)">+59</strong></span>
-    <span style="font-size:22px;font-weight:700;color:var(--red);letter-spacing:-0.5px">104<span style="font-size:9px;font-weight:400;color:#9ca3af;margin-left:3px">NL</span></span>
-  </div>
-  <div class="b-track">
-    <div style="position:absolute;top:0;left:0;height:100%;width:44%;background:#e5e7eb;border-radius:4px 0 0 4px;"></div>
-    <div style="position:absolute;top:0;right:0;height:100%;width:56%;background:#d1d5db;border-radius:0 4px 4px 0;"></div>
-  </div>
-  <div class="b-sub" style="position:relative;"><span style="color:var(--green)">61% NH ratio · Leaders still leading</span></div>
-
-  <!-- VOLUME -->
-  <div style="font-size:9px;color:var(--amber);text-transform:uppercase;letter-spacing:0.1em;margin:10px 0 5px;font-weight:700;">④ Volume — Conviction (NYSE)</div>
-  <div style="display:flex;justify-content:space-between;margin-bottom:5px;">
-    <div><span style="font-size:16px;font-weight:700;color:var(--green)">3.12B</span> <span style="font-size:9px;color:#9ca3af">↑ Up</span></div>
-    <div><span style="font-size:9px;color:#9ca3af">38% / </span><span style="font-size:9px;color:#9ca3af">62%</span></div>
-    <div><span style="font-size:16px;font-weight:700;color:var(--red)">5.08B</span> <span style="font-size:9px;color:#9ca3af">↓ Down</span></div>
-  </div>
-  <div style="height:12px;background:#f0f4fb;border-radius:5px;overflow:hidden;display:flex;">
-    <div style="flex:3.12;background:#e5e7eb;border-radius:5px 0 0 5px;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#374151;">38%</div>
-    <div style="flex:5.08;background:#d1d5db;border-radius:0 5px 5px 0;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#374151;">62%</div>
-  </div>
-  <div class="b-sub"><span style="color:var(--red);font-weight:600">⚠ Distribution Day #3</span><span>NVDA 211M shares</span></div>
-
-</div>
-```
-
   </div>
 
   <!-- ── COL 2: Theme Heatmap + Market Brief ── -->
-
   <div id="center">
     <div id="theme-panel">
       <div class="ph">
@@ -449,65 +439,62 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:#111827;font-fa
   </div>
 
   <!-- ── COL 3: Indexes + Mega Caps + Leaders ── -->
-
   <div id="right">
 
-```
-<!-- INDEXES -->
-<div class="wl-section" style="flex:0 0 auto;max-height:38%">
-  <div class="ph">
-    <span class="ph-title">Indexes</span>
-    <div class="ph-dot"></div>
-  </div>
-  <div class="wl-cols" style="grid-template-columns:14px 52px 18px 1fr 50px">
-    <div class="wl-col"></div>
-    <div class="wl-col">Symbol</div>
-    <div class="wl-col">Wt.</div>
-    <div class="wl-col">Name</div>
-    <div class="wl-col right">% Chg</div>
-  </div>
-  <div class="wl-body" id="indexes-list"></div>
-  <div style="font-size:8px;color:#9ca3b0;padding:3px 6px;border-top:1px solid var(--border)">0 of 16 results (0 selected)</div>
-</div>
+    <!-- INDEXES -->
+    <div class="wl-section" style="flex:0 0 auto;max-height:38%">
+      <div class="ph">
+        <span class="ph-title">Indexes</span>
+        <div class="ph-dot"></div>
+      </div>
+      <div class="wl-cols" style="grid-template-columns:14px 52px 18px 1fr 50px">
+        <div class="wl-col"></div>
+        <div class="wl-col">Symbol</div>
+        <div class="wl-col">Wt.</div>
+        <div class="wl-col">Name</div>
+        <div class="wl-col right">% Chg</div>
+      </div>
+      <div class="wl-body" id="indexes-list"></div>
+      <div style="font-size:8px;color:#9ca3b0;padding:3px 6px;border-top:1px solid var(--border)">0 of 16 results (0 selected)</div>
+    </div>
 
-<!-- MEGA CAPS -->
-<div class="wl-section flex1">
-  <div class="ph">
-    <span class="ph-title">Mega Caps</span>
-    <div class="ph-dot"></div>
-  </div>
-  <div class="wl-cols" style="grid-template-columns:14px 52px 56px 40px 62px 32px 30px">
-    <div class="wl-col"></div>
-    <div class="wl-col">Symbol</div>
-    <div class="wl-col right">% Chg</div>
-    <div class="wl-col right">Last</div>
-    <div class="wl-col right">Avg$Vol</div>
-    <div class="wl-col right">ADR</div>
-    <div class="wl-col right">RV</div>
-  </div>
-  <div class="wl-body" id="mega-list"></div>
-  <div style="font-size:8px;color:#9ca3b0;padding:3px 6px;border-top:1px solid var(--border)" id="mega-count">0 of 12 results (0 selected)</div>
-</div>
+    <!-- MEGA CAPS -->
+    <div class="wl-section flex1">
+      <div class="ph">
+        <span class="ph-title">Mega Caps</span>
+        <div class="ph-dot"></div>
+      </div>
+      <div class="wl-cols" style="grid-template-columns:14px 52px 56px 40px 62px 32px 30px">
+        <div class="wl-col"></div>
+        <div class="wl-col">Symbol</div>
+        <div class="wl-col right">% Chg</div>
+        <div class="wl-col right">Last</div>
+        <div class="wl-col right">Avg$Vol</div>
+        <div class="wl-col right">ADR</div>
+        <div class="wl-col right">RV</div>
+      </div>
+      <div class="wl-body" id="mega-list"></div>
+      <div style="font-size:8px;color:#9ca3b0;padding:3px 6px;border-top:1px solid var(--border)" id="mega-count">0 of 12 results (0 selected)</div>
+    </div>
 
-<!-- LEADERS -->
-<div class="wl-section" style="flex:0 0 auto;max-height:30%">
-  <div class="ph">
-    <span class="ph-title">Deepvue Leaders</span>
-    <div class="ph-dot"></div>
-  </div>
-  <div class="wl-cols" style="grid-template-columns:14px 52px 56px 40px 62px 32px 30px">
-    <div class="wl-col"></div>
-    <div class="wl-col">Symbol</div>
-    <div class="wl-col right">% Chg</div>
-    <div class="wl-col right">Last</div>
-    <div class="wl-col right">Avg$Vol</div>
-    <div class="wl-col right">ADR</div>
-    <div class="wl-col right">RV</div>
-  </div>
-  <div class="wl-body" id="leaders-list"></div>
-  <div style="font-size:8px;color:#9ca3b0;padding:3px 6px;border-top:1px solid var(--border)">374 of 391 results (0 selected)</div>
-</div>
-```
+    <!-- LEADERS -->
+    <div class="wl-section" style="flex:0 0 auto;max-height:30%">
+      <div class="ph">
+        <span class="ph-title">Deepvue Leaders</span>
+        <div class="ph-dot"></div>
+      </div>
+      <div class="wl-cols" style="grid-template-columns:14px 52px 56px 40px 62px 32px 30px">
+        <div class="wl-col"></div>
+        <div class="wl-col">Symbol</div>
+        <div class="wl-col right">% Chg</div>
+        <div class="wl-col right">Last</div>
+        <div class="wl-col right">Avg$Vol</div>
+        <div class="wl-col right">ADR</div>
+        <div class="wl-col right">RV</div>
+      </div>
+      <div class="wl-body" id="leaders-list"></div>
+      <div style="font-size:8px;color:#9ca3b0;padding:3px 6px;border-top:1px solid var(--border)">374 of 391 results (0 selected)</div>
+    </div>
 
   </div>
 </div>
@@ -515,11 +502,9 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:#111827;font-fa
 <!-- ══════════════════════════════════════════════════════════
      DEEP DIVE VIEW  (hidden by default, shown via tab)
 ════════════════════════════════════════════════════════════ -->
-
 <div id="deep-dive">
 
   <!-- PANE 1: Finviz Themes Map -->
-
   <div class="dd-pane">
     <div class="dd-head">
       <span style="width:6px;height:6px;border-radius:50%;background:#2a9df4;box-shadow:0 0 5px #2a9df4;flex-shrink:0"></span>
@@ -537,7 +522,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:#111827;font-fa
   </div>
 
   <!-- PANE 2: Stockbee Market Monitor -->
-
   <div class="dd-pane">
     <div class="dd-head">
       <span style="width:6px;height:6px;border-radius:50%;background:#00c878;box-shadow:0 0 5px #00c878;flex-shrink:0"></span>
@@ -555,7 +539,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:#111827;font-fa
   </div>
 
   <!-- PANE 3: US Indices -->
-
   <div id="dd-indices">
     <div class="dd-head" style="background:var(--bg2);border-bottom:1px solid var(--border)">
       <span style="width:6px;height:6px;border-radius:50%;background:#f5a623;box-shadow:0 0 5px #f5a623;flex-shrink:0"></span>
@@ -564,85 +547,78 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:#111827;font-fa
     </div>
     <div style="overflow-y:auto;flex:1">
 
-```
-  <!-- MAJOR AVERAGES -->
-  <div class="idx-group">
-    <div class="idx-group-title">Major Averages</div>
-    <div id="dd-majors"></div>
-  </div>
+      <!-- MAJOR AVERAGES -->
+      <div class="idx-group">
+        <div class="idx-group-title">Major Averages</div>
+        <div id="dd-majors"></div>
+      </div>
 
-  <!-- SECTOR ETFs -->
-  <div class="idx-group">
-    <div class="idx-group-title">SPDR Sector ETFs</div>
-    <div id="dd-sectors"></div>
-  </div>
+      <!-- SECTOR ETFs -->
+      <div class="idx-group">
+        <div class="idx-group-title">SPDR Sector ETFs</div>
+        <div id="dd-sectors"></div>
+      </div>
 
-  <!-- VOLATILITY & RATES -->
-  <div class="idx-group">
-    <div class="idx-group-title">Vol · Rates · Commodities</div>
-    <div id="dd-volrates"></div>
-  </div>
+      <!-- VOLATILITY & RATES -->
+      <div class="idx-group">
+        <div class="idx-group-title">Vol · Rates · Commodities</div>
+        <div id="dd-volrates"></div>
+      </div>
 
-  <!-- INTERNATIONAL -->
-  <div class="idx-group">
-    <div class="idx-group-title">International</div>
-    <div id="dd-intl"></div>
-  </div>
+      <!-- INTERNATIONAL -->
+      <div class="idx-group">
+        <div class="idx-group-title">International</div>
+        <div id="dd-intl"></div>
+      </div>
 
-</div>
-<div class="dd-notice">
-  <strong>Finviz Themes:</strong> Tracks AI, Biotech, Defense, EV, Fintech, Crypto, Uranium, Space, Quantum + 20 more.<br>
-  <strong>Stockbee MM:</strong> Red = distribution. Green = accumulation. Ratio &lt;0.5 = extreme sell.<br>
-  <span style="color:#9ca3b0">Data: Feb 26, 2026 confirmed close</span>
-</div>
-```
-
+    </div>
+    <div class="dd-notice">
+      <strong>Finviz Themes:</strong> Tracks AI, Biotech, Defense, EV, Fintech, Crypto, Uranium, Space, Quantum + 20 more.<br>
+      <strong>Stockbee MM:</strong> Red = distribution. Green = accumulation. Ratio &lt;0.5 = extreme sell.<br>
+      <span style="color:#9ca3b0">Data: Feb 26, 2026 confirmed close</span>
+    </div>
   </div>
 
 </div>
 
 <!-- ── MODAL ── -->
-
 <div id="modal" onclick="closeModalBg(event)">
   <div class="mbox">
 
-```
-<!-- Header row -->
-<div class="mhead">
-  <button class="m-back-btn" onclick="closeModal()">‹ Back</button>
-  <span class="mbadge" id="m-badge">XLF</span>
-  <div style="flex:1;min-width:0">
-    <div class="mtitle" id="m-title">Financials</div>
-    <div class="msub" id="m-sub">Loading…</div>
-  </div>
-  <span class="m-filter-badge">MCap &gt; $1B · Sorted ▼ Today %</span>
-  <button class="mclose" onclick="closeModal()">✕</button>
-</div>
+    <!-- Header row -->
+    <div class="mhead">
+      <button class="m-back-btn" onclick="closeModal()">‹ Back</button>
+      <span class="mbadge" id="m-badge">XLF</span>
+      <div style="flex:1;min-width:0">
+        <div class="mtitle" id="m-title">Financials</div>
+        <div class="msub" id="m-sub">Loading…</div>
+      </div>
+      <span class="m-filter-badge">MCap &gt; $1B · Sorted ▼ Today %</span>
+      <button class="mclose" onclick="closeModal()">✕</button>
+    </div>
 
-<!-- Stats strip -->
-<div class="mstats" id="m-stats"></div>
+    <!-- Stats strip -->
+    <div class="mstats" id="m-stats"></div>
 
-<!-- Column headers — matching Image 2 exactly -->
-<div class="mp-col-header">
-  <div class="mp-ch mp-ch-ticker">Ticker</div>
-  <div class="mp-ch mp-ch-vol">$ Vol</div>
-  <div class="mp-ch mp-ch-tf" id="mh-today" onclick="setModalSort('chg1d')" style="color:#4db8ff">Today ▼</div>
-  <div class="mp-ch mp-ch-tf" id="mh-1w"    onclick="setModalSort('chg1m')">1W</div>
-  <div class="mp-ch mp-ch-tf" id="mh-1m"    onclick="setModalSort('chg1m')">1M</div>
-  <div class="mp-ch mp-ch-tf" id="mh-3m"    onclick="setModalSort('chg3m')">3M</div>
-  <div class="mp-ch mp-ch-tf" id="mh-ytd"   onclick="setModalSort('chg3m')">YTD</div>
-</div>
+    <!-- Column headers — matching Image 2 exactly -->
+    <div class="mp-col-header">
+      <div class="mp-ch mp-ch-ticker">Ticker</div>
+      <div class="mp-ch mp-ch-vol">$ Vol</div>
+      <div class="mp-ch mp-ch-tf" id="mh-today" onclick="setModalSort('chg1d')" style="color:#4db8ff">Today ▼</div>
+      <div class="mp-ch mp-ch-tf" id="mh-1w"    onclick="setModalSort('chg1m')">1W</div>
+      <div class="mp-ch mp-ch-tf" id="mh-1m"    onclick="setModalSort('chg1m')">1M</div>
+      <div class="mp-ch mp-ch-tf" id="mh-3m"    onclick="setModalSort('chg3m')">3M</div>
+      <div class="mp-ch mp-ch-tf" id="mh-ytd"   onclick="setModalSort('chg3m')">YTD</div>
+    </div>
 
-<!-- Stock rows -->
-<div class="mp-list" id="m-grid"></div>
+    <!-- Stock rows -->
+    <div class="mp-list" id="m-grid"></div>
 
-<!-- Footer -->
-<div class="mfooter">
-  <span class="mf-note">Filter: MCap &gt; $1B only · Click column headers to re-sort · 📈 Chart opens TradingView · FV opens Finviz</span>
-  <span class="mf-ct" id="m-ct"></span>
-</div>
-```
-
+    <!-- Footer -->
+    <div class="mfooter">
+      <span class="mf-note">Filter: MCap &gt; $1B only · Click column headers to re-sort · 📈 Chart opens TradingView · FV opens Finviz</span>
+      <span class="mf-ct" id="m-ct"></span>
+    </div>
   </div>
 </div>
 
