@@ -191,6 +191,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:#111827;font-fa
 .mf-note{font-size:8px;color:#9ca3af}
 .mf-ct{font-size:9px;font-weight:700;color:#f5a623;margin-left:auto}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes spin{to{transform:rotate(360deg)}}
 
 /* ── DEEP DIVE VIEW ── */
 #deep-dive{display:none;height:calc(100vh - 50px);overflow:hidden;background:var(--bg)}
@@ -1651,19 +1652,90 @@ function buildBreadthTable(){
     return`<tr><td class="dc">${row.d}</td>${cells}<td class="bn">${row.univ.toLocaleString()}</td><td class="bb" style="cursor:default">${row.sp}</td></tr>`;
   }).join('');
 }
-function openBP(lb,sk){
-  const stocks=BS[sk]||[];
-  document.getElementById('bpttl').textContent=lb+' ('+stocks.length+' stocks)';
-  document.getElementById('bpbd').innerHTML=stocks.map((s,i)=>`
+// Live breadth screener — fetches real stocks from Yahoo Finance
+// Maps breadth key to Yahoo Finance screener preset + filter params
+const BP_SCREENER = {
+  u4:   {url:'https://query1.finance.yahoo.com/v1/finance/screener/predefined/saved?scrIds=day_gainers&count=100', filter: q => q.regularMarketChangePercent >= 4,   sort: (a,b) => b.regularMarketChangePercent - a.regularMarketChangePercent},
+  d4:   {url:'https://query1.finance.yahoo.com/v1/finance/screener/predefined/saved?scrIds=day_losers&count=100',  filter: q => q.regularMarketChangePercent <= -4,  sort: (a,b) => a.regularMarketChangePercent - b.regularMarketChangePercent},
+  uq:   {url:'https://query1.finance.yahoo.com/v1/finance/screener/predefined/saved?scrIds=day_gainers&count=100', filter: q => q.regularMarketChangePercent >= 2,   sort: (a,b) => b.regularMarketChangePercent - a.regularMarketChangePercent},
+  dq:   {url:'https://query1.finance.yahoo.com/v1/finance/screener/predefined/saved?scrIds=day_losers&count=100',  filter: q => q.regularMarketChangePercent <= -2,  sort: (a,b) => a.regularMarketChangePercent - b.regularMarketChangePercent},
+  um:   {url:'https://query1.finance.yahoo.com/v1/finance/screener/predefined/saved?scrIds=day_gainers&count=100', filter: q => q.regularMarketChangePercent >= 1.5, sort: (a,b) => b.regularMarketChangePercent - a.regularMarketChangePercent},
+  dm:   {url:'https://query1.finance.yahoo.com/v1/finance/screener/predefined/saved?scrIds=day_losers&count=100',  filter: q => q.regularMarketChangePercent <= -1.5,sort: (a,b) => a.regularMarketChangePercent - b.regularMarketChangePercent},
+  u50m: {url:'https://query1.finance.yahoo.com/v1/finance/screener/predefined/saved?scrIds=day_gainers&count=100', filter: q => q.regularMarketChangePercent >= 3,   sort: (a,b) => b.regularMarketChangePercent - a.regularMarketChangePercent},
+  d50m: {url:'https://query1.finance.yahoo.com/v1/finance/screener/predefined/saved?scrIds=day_losers&count=100',  filter: q => q.regularMarketChangePercent <= -3,  sort: (a,b) => a.regularMarketChangePercent - b.regularMarketChangePercent},
+  u34:  {url:'https://query1.finance.yahoo.com/v1/finance/screener/predefined/saved?scrIds=day_gainers&count=100', filter: q => q.regularMarketChangePercent >= 1,   sort: (a,b) => b.regularMarketChangePercent - a.regularMarketChangePercent},
+  d34:  {url:'https://query1.finance.yahoo.com/v1/finance/screener/predefined/saved?scrIds=day_losers&count=100',  filter: q => q.regularMarketChangePercent <= -1,  sort: (a,b) => a.regularMarketChangePercent - b.regularMarketChangePercent},
+};
+
+// Cache fetched results so re-opens are instant
+const BP_CACHE = {};
+
+async function openBP(lb, sk) {
+  document.getElementById('bpttl').textContent = lb;
+  document.getElementById('bpbd').innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:center;padding:40px;gap:10px;color:#9ca3af;font-size:11px">
+      <div style="width:16px;height:16px;border:2px solid #e5e7eb;border-top-color:#2563eb;border-radius:50%;animation:spin .7s linear infinite"></div>
+      Fetching live data…
+    </div>`;
+  document.getElementById('bp-ov').classList.add('open');
+
+  // Use cache if available
+  if (BP_CACHE[sk]) {
+    renderBPStocks(BP_CACHE[sk], lb);
+    return;
+  }
+
+  // Try live fetch first
+  let stocks = [];
+  try {
+    const cfg = BP_SCREENER[sk];
+    if (cfg) {
+      const resp = await fetch(cfg.url);
+      if (resp.ok) {
+        const data = await resp.json();
+        const quotes = data?.finance?.result?.[0]?.quotes || [];
+        stocks = quotes
+          .filter(cfg.filter)
+          .sort(cfg.sort)
+          .slice(0, 50)
+          .map(q => ({
+            s: q.symbol,
+            n: q.shortName || q.longName || q.symbol,
+            c: q.regularMarketChangePercent
+          }));
+      }
+    }
+  } catch(e) {
+    console.warn('Live breadth fetch failed:', e);
+  }
+
+  // Fallback to static BS data if live fetch failed or returned nothing
+  if (!stocks.length) {
+    stocks = (BS[sk] || []).map(x => ({s: x.s, n: x.n, c: x.c}));
+  }
+
+  BP_CACHE[sk] = stocks;
+  renderBPStocks(stocks, lb);
+}
+
+function renderBPStocks(stocks, lb) {
+  document.getElementById('bpttl').textContent = lb + ' (' + stocks.length + ' stocks)';
+  if (!stocks.length) {
+    document.getElementById('bpbd').innerHTML = `<div style="padding:30px;text-align:center;color:#9ca3af;font-size:11px">No stocks found for this filter.</div>`;
+    return;
+  }
+  document.getElementById('bpbd').innerHTML = stocks.map((s, i) => `
     <div class="bprw" onclick="openSM('${s.s}')">
-      <div class="bpn">${i+1}</div>
+      <div class="bpn">${i + 1}</div>
       <div class="bpsym">${s.s}</div>
       <div class="bpnm">${s.n}</div>
-      <div class="bpchg" style="color:${s.c>=0?'#00c878':'#ff3050'}">${s.c>=0?'+':''}${s.c.toFixed(2)}%</div>
+      <div class="bpchg" style="color:${s.c >= 0 ? '#00c878' : '#ff3050'}">${s.c >= 0 ? '+' : ''}${s.c.toFixed(2)}%</div>
     </div>`).join('');
-  document.getElementById('bp-ov').classList.add('open');
 }
-function closeBP(){document.getElementById('bp-ov').classList.remove('open');}
+
+function closeBP() {
+  document.getElementById('bp-ov').classList.remove('open');
+}
 
 // ── STOCK MODAL ──
 function openSM(sym){
@@ -1786,7 +1858,7 @@ function buildThemeList(){
 <div id="bp-ov" onclick="if(event.target===this)closeBP()">
   <div class="bpbox">
     <div class="bph"><div class="bpttl" id="bpttl">Stocks</div><div class="bpcls" onclick="closeBP()">&#10005;</div></div>
-    <div class="bpch"><div>#</div><div>Ticker</div><div>Company</div><div style="text-align:right">Chg%</div></div>
+    <div class="bpch"><div>#</div><div>Ticker</div><div>Company</div><div style="text-align:right">Change %</div></div>
     <div class="bpbd" id="bpbd"></div>
   </div>
 </div>
